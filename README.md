@@ -1,7 +1,7 @@
-# A Roundcube-plugin to force-display pgp/mime ciphertext
+# Roundcube webmail plugin to show PGP/MIME encrypted messages
 
-This Roundcube-plugin forces Roundcube to display the encrypted part of
-pgp/mime-formatted messages as text/plain.
+This Plugin makes Roundcube webmail <http://roundcube.net/> show the encrypted
+part of pgp/mime-formatted messages as text/plain.
 
 Tools like Mailvelope <https://www.mailvelope.com/> can handle multiparted
 messages fine, but only if they can get their hands on it.
@@ -9,28 +9,22 @@ messages fine, but only if they can get their hands on it.
 To customize the text that prefixes the displayed message-part see localization/
 
 
-## Contact
+## Requirements
 
-Please contact us by email: <mailto:opensource@posteo.de>.
+Only confirmed to be working with Roundcube v1.0.x.
 
 
-## Copying
+## Install
 
-Copyright (c) 2014 Posteo e.K., <https://posteo.de/>.
+To use the plugin drop the code into Roundcube's plugins-folder and enable it in Roundcube's config. E.g.:
 
-Licensed under GNU General Public License v3
-<https://gnu.org/licenses/gpl.html>.
+    cd $roundcube/plugins
+    git clone git://github.com/posteo/show_pgp_mime
+    vim ../config/config.inc.php
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+## Contribution
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+Any contribution is welcome! Feel free to open an issue or do a pull request at
+github.com.
 

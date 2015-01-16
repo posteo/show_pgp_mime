@@ -80,7 +80,7 @@ class show_pgp_mime extends rcube_plugin {
         return $args;
     }
     $rcmail = rcmail::get_instance();
-    $enabled = $rcmail->config->get('show_pgp_mime', 'foo');
+    $enabled = $rcmail->config->get('show_pgp_mime', true);
     $field_id = 'show_pgp_mime';
     $input = new html_checkbox(array('name' => '_'.$field_id, 'id' => $field_id, 'value' => '1'));
 

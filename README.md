@@ -11,7 +11,7 @@ To customize the text that prefixes the displayed message-part see localization/
 
 ## Requirements
 
-Only confirmed to be working with Roundcube v1.0.x.
+Confirmed to be working with Roundcube v1.0.x and v1.1.x.
 
 
 ## Install

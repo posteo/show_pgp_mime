@@ -27,25 +27,38 @@
  */
 
 class show_pgp_mime extends rcube_plugin {
+  public $task = 'mail';
+  private $encrypted_part = null;
+
   function init() {
     $this->add_texts('localization/');
     $this->add_hook('message_load', array($this, 'change_message'));
+    $this->add_hook('message_body_prefix', array($this, 'message_body_prefix'));
   }
 
   public function change_message($arg) {
     $mail = $arg['object'];
     if (count($mail->parts) == 1 && $mail->parts[0]->realtype == 'multipart/encrypted') {
-      $ciphertext = $mail->get_part_content(2);
-      $prefix = $this->gettext("show_pgp_mime_body_prefix");
-      if (!empty($prefix)) {
-        $text = "[$prefix]\n\n$ciphertext";
-      } else {
-        $text = $ciphertext;
+      // find the encrypted message payload part
+      foreach ($mail->mime_parts as $mime_id => $part) {
+        if ($part->mimetype == 'application/octet-stream' || !empty($part->filename)) {
+          $this->encrypted_part = $mime_id;
+          $mail->parts[0]->mime_id = $mime_id;  // get content from this part
+          $mail->parts[0]->size = $mail->mime_parts[$mime_id]->size;
+          unset($mail->parts[0]->realtype);
+          break;
+        }
       }
-      $mail->parts[0]->body = $text;
-      $mail->parts[0]->size = strlen($text);
-      unset($mail->parts[0]->realtype);
     }
-    return $mail;
+  }
+
+  public function message_body_prefix($arg) {
+    if ($this->encrypted_part) {
+        $arg['prefix'] = html::p(
+          array('class' => 'hint', 'style' => 'margin-bottom:1em'),
+          $this->gettext("show_pgp_mime_body_prefix")
+        );
+    }
+    return $arg;
   }
 }

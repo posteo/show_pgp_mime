@@ -22,6 +22,11 @@ To use the plugin drop the code into Roundcube's plugins-folder and enable it in
     git clone git://github.com/posteo/show_pgp_mime
     vim ../config/config.inc.php
 
+The feature will be enabled for all users if the plugin is activated. You can control
+the default by setting the following option in Roundcube config:
+
+    // display of encrypted pgp/mime content in mail view
+    $config['show_pgp_mime'] = false;
 
 ## Contribution
 

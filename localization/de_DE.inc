@@ -22,6 +22,5 @@
 
 $labels = array();
 $labels['show_pgp_mime_body_prefix'] = 'Dies ist eine mit PGP/MIME verschlüsselte Nachricht. Sie können Sie mit Addons wie Mailvelope entschlüsseln, um sie im Webmailer zu lesen.';
-
-$messages = array();
+$labels['show_pgp_mime_prefs_label'] = 'PGP/MIME Nachrichten anzeigen (verschlüsselt)';
 

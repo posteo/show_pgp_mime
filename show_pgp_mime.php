@@ -27,13 +27,26 @@
  */
 
 class show_pgp_mime extends rcube_plugin {
-  public $task = 'mail';
+  public $task = 'mail|settings';
   private $encrypted_part = null;
 
   function init() {
     $this->add_texts('localization/');
-    $this->add_hook('message_load', array($this, 'change_message'));
-    $this->add_hook('message_body_prefix', array($this, 'message_body_prefix'));
+
+    $rcmail = rcmail::get_instance();
+    if ($rcmail->task == 'mail' && $rcmail->config->get('show_pgp_mime', true)) {
+      $this->add_hook('message_load', array($this, 'change_message'));
+      $this->add_hook('message_body_prefix', array($this, 'message_body_prefix'));
+    }
+    else if ($rcmail->task == 'settings') {
+      $dont_override = $rcmail->config->get('dont_override', array());
+      if (!in_array('show_pgp_mime', $dont_override)) {
+        $this->add_hook('preferences_list', array($this, 'prefs_table'));
+        $this->add_hook('preferences_save', array($this, 'save_prefs'));
+      }
+      // set default value
+      $rcmail->config->set('show_pgp_mime', $rcmail->config->get('show_pgp_mime', true));
+    }
   }
 
   public function change_message($arg) {
@@ -60,5 +73,29 @@ class show_pgp_mime extends rcube_plugin {
         );
     }
     return $arg;
+  }
+
+  function prefs_table($args) {
+    if ($args['section'] != 'mailview') {
+        return $args;
+    }
+    $rcmail = rcmail::get_instance();
+    $enabled = $rcmail->config->get('show_pgp_mime', 'foo');
+    $field_id = 'show_pgp_mime';
+    $input = new html_checkbox(array('name' => '_'.$field_id, 'id' => $field_id, 'value' => '1'));
+
+    $args['blocks']['advanced']['options']['show_pgp_mime'] = array(
+      'title' => $this->gettext('show_pgp_mime_prefs_label'),
+      'content' => $input->show($enabled ? '1' : ''),
+    );
+
+    return $args;
+  }
+
+  function save_prefs($args) {
+    if ($args['section'] == 'mailview') {
+      $args['prefs']['show_pgp_mime'] = !empty($_POST['_show_pgp_mime']);
+    }
+    return $args;
   }
 }

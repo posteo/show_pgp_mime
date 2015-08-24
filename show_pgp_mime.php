@@ -54,7 +54,7 @@ class show_pgp_mime extends rcube_plugin {
     if (count($mail->parts) == 1 && $mail->parts[0]->realtype == 'multipart/encrypted') {
       // find the encrypted message payload part
       foreach ($mail->mime_parts as $mime_id => $part) {
-        if ($part->mimetype == 'application/octet-stream' || !empty($part->filename)) {
+        if ($part->mimetype == 'application/octet-stream') {
           $this->encrypted_part = $mime_id;
           $mail->parts[0]->mime_id = $mime_id;  // get content from this part
           $mail->parts[0]->size = $mail->mime_parts[$mime_id]->size;

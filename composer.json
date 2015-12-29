@@ -3,20 +3,20 @@
     "type": "roundcube-plugin",
     "description": "Show PGP/MIME-messages in Roundcube",
     "keywords": ["mail","openpgp"],
-    "homepage": "http://github.com/posteo/show_pgp_mime",
-    "license": "GPL-3.0+",
+    "homepage": "https://github.com/posteo/show_pgp_mime",
+    "license": "AGPL-3.0+",
     "authors": [
         {
             "name": "Enoch Root",
             "email": "opensource@posteo.de",
-            "homepage": "http://posteo.de/",
+            "homepage": "https://posteo.de/",
             "role": "Developer"
         }
     ],
     "repositories": [
         {
             "type": "composer",
-            "url": "http://plugins.roundcube.net/"
+            "url": "https://plugins.roundcube.net/"
         }
     ],
     "require": {
